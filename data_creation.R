@@ -25,5 +25,5 @@ iris_data = data.table(iris)
   test = iris_data[(-training_indices), ]
   
 # Export 'train' and 'test'.
-write.csv(train, 'train.csv', row.numbers = F)
-write.csv(test, 'test.csv', row.numbers = F)
+write.csv(train, 'train.csv', row.names = F)
+write.csv(test, 'test.csv', row.names = F)
