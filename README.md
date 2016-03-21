@@ -29,6 +29,7 @@ I created this project to explore various machine learning models in R and Pytho
 #### Dataset Details:
 I use the famous 'iris' dataset in R.
 The dataset gives the measurements in centimeters of the variables sepal length and width and petal length and width, respectively, for 50 flowers from each of 3 species of iris. The species are Iris setosa, versicolor, and virginica.
+The models will be predicting the species.
 A csv file of the data is included in each branch. The script to create the csv
 More information on the data can be found here:
 https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/iris.html
