@@ -23,6 +23,8 @@ Python:
 - K Nearest Neighbor
 - Naive Bayes
 
+For each model, training set accuracy, accuracy derived from cross validation, and test set accuracy will be included.
+
 #### Motivation:
 I created this project to explore various machine learning models in R and Python.
 
