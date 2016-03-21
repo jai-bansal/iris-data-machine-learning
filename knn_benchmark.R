@@ -1,4 +1,4 @@
-# This script creates and evaluates an adaboost model in R for the 'iris' data.
+# This script creates and evaluates an K Nearest Neighbor model in R for the 'iris' data.
 # This iteration is only to get the model up and running, so there is no feature engineering and parameter tuning.
 
 # Load packages.
