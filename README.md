@@ -39,6 +39,7 @@ https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/iris.html
 I divide the data into 100 training examples and 50 test examples.
 The 'data_creation.R' file in the 'master' branch creates the training and test sets.
 Note that this file can only be run in R.
+The training and test files are called 'train.csv' and 'test.csv' in all 3 branches.
 
 #### License:
 GNU General Public License
