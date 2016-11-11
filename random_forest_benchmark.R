@@ -44,7 +44,7 @@ test = data.table(read.csv('test.csv',
   
   # OOB error is near the top of the following output.
   # For random forests, OOB error makes cross validation unnecessary.
-  rf
+  prop.table(table(train$Species == rf$predicted))
   
   # Compute model performance on training data.
   
