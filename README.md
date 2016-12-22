@@ -4,18 +4,18 @@ The R and Python scripts are contained in the R and Python branches, respectivel
 These scripts are written to get the simplest possible version of the models up and running as quickly as possible, so there is no feature engineering and parameter tuning.
 The small iris dataset (150 rows total) is also chosen for ease of use.
 
-Below are the models contained in each branch:
+Below are the models contained in each branch. I've also included the library or modules used in parentheses.
 
 R:
-- Neural Network
-- Random Forest
-- Adaboost
-- Support Vector Machine
-- Logistic Regression
-- K Nearest Neighbor
-- Naive Bayes
+- Neural Network ('nnet' and 'e1071')
+- Random Forest ('randomForest', 'RRF', and 'caret' implementations)
+- Adaboost ('adabag')
+- Support Vector Machine ('e1071')
+- Logistic Regression ('nnet')
+- K Nearest Neighbor ('kknn')
+- Naive Bayes ('e1071')
 
-Python:
+Python (all models use 'sklearn'):
 - Random Forest
 - Adaboost
 - Support Vector Machine
