@@ -6,7 +6,7 @@
 # This section loads relevant libraries.
 library(data.table)
 library(randomForest)
-library(rrf)
+library(RRF)
 library(caret)
 
 # IMPORT DATA -------------------------------------------------------------
@@ -91,8 +91,33 @@ test = data.table(read.csv('test.csv',
   table(test$Species == test_pred$rrf_pred)
   prop.table(table(test$Species == test_pred$rrf_pred))
 
-  
 # 'caret' PACKAGE MODEL ---------------------------------------------------
 # This section implements a random forest model using the 'caret' package.
-
   
+  # Set seed for reproducibility.
+  set.seed(1)
+  
+  # Create random forest model using 'caret' package along with a cross validation procedure..
+  caret_rf = train(model, 
+                   data = train, 
+                   method = 'rf', 
+                   trControl = trainControl(method = 'repeatedcv', 
+                                            number = 5))
+  
+  # Generate training and test set predictions.
+  train_pred$caret_pred = predict(caret_rf, 
+                                  newdata = train)
+  test_pred$caret_pred = predict(caret_rf, 
+                                 newdata = test)
+  
+  # Check training set accuracy.
+  table(train$Species == train_pred$caret_pred)
+  prop.table(table(train$Species == train_pred$caret_pred))
+  
+  # Check cross validation set accuracy.
+  # I didn't find how to get these results in the same format as others in this script.
+  caret_rf$results
+  
+  # Check test set accuracy.
+  table(test$Species == test_pred$caret_pred)
+  prop.table(table(test$Species == test_pred$caret_pred))
