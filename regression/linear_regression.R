@@ -7,14 +7,13 @@ library(readr)
 library(data.table)
 library(caret)
 
-
 # IMPORT DATA -------------------------------------------------------------
 # This section imports data.
 # The data files are located in the 'R' branch file, NOT the 'classification' or 'regression' folders.
 train = data.table(read_csv('train.csv'))
 test = data.table(read_csv('test.csv'))
 
-# CREATE MODEL
+# CREATE MODEL ------------------------------------------------------------
 # This section creates a linear regression model.
 
   # Set seed for reproducibility.
@@ -33,20 +32,21 @@ test = data.table(read_csv('test.csv'))
   # View variable importance plot.
   plot(varImp(linear_reg))
   
-  
-  # Generate test set predictions.
+  # Generate training and test set predictions
+  train$linear_reg_pred = predict(linear_reg, train)
   test$linear_reg_pred = predict(linear_reg, 
                                  test)
 
-  
-
 # EVALUATE MODEL ----------------------------------------------------------
-# This section evaluates the model by computing training, cross validation, and test set error.
+# This section evaluates the model by computing training, cross validation, and test set root mean square error (RMSE).
+# Note that I do not include degrees of freedom in the training and test set calculations below.
+# I'm not sure how 'caret' computes RMSE in the cross validation calculation.
   
-  # Compute training set error.
-  sum((train$Sepal.Length - predict(linear_reg)) ^ 2)
+  # Compute training set RMSE
+  sqrt(sum((train$Sepal.Length - predict(linear_reg)) ^ 2) / nrow(train))
   
-  # Compute cross validation set error.
+  # Compute cross validation set RMSE.
+  mean(linear_reg$resample$RMSE)
   
-  # Compute test set error.
-  sum((test$Sepal.Length - test$linear_reg_pred) ^ 2)
+  # Compute test set RMSE.
+  sqrt(sum((test$Sepal.Length - test$linear_reg_pred) ^ 2) / nrow(test))
