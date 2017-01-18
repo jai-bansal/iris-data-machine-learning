@@ -54,9 +54,9 @@ test = data.table(read.csv('test.csv',
   prop.table(table(test$Species == test_pred$rf_pred))
   
 
-# 'rrf' PACKAGE MODEL -----------------------------------------------------
-# This section implements a random forest model using the 'rrf' package (regularized random forest).
-# There may not be much difference between 'rrf' and 'randomForest' results in this data set because the
+# 'RRF' PACKAGE MODEL -----------------------------------------------------
+# This section implements a random forest model using the 'RRF' package (regularized random forest).
+# There may not be much difference between 'RRF' and 'randomForest' results in this data set because the
 # feature space is small (6 features).
   
   # Set seed for reproducibility.
