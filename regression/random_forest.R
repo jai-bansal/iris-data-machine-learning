@@ -113,7 +113,8 @@ test = data.table(read_csv('test.csv'))
   rf_caret
   
   # Generate training and test set predictions
-  train$caret_pred = predict(rf_caret, train)
+  train$caret_pred = predict(rf_caret, 
+                             train)
   test$caret_pred = predict(rf_caret, 
                             test)
   

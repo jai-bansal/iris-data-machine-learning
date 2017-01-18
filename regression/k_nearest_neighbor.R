@@ -1,5 +1,5 @@
-# This script creates and evaluates a linear regression model in R for the 'iris' data.
-# This iteration is only to get the model up and running, so there is no feature engineering and parameter tuning.
+# This script creates and evaluates a k-nearest-neighbor (KNN) regression model in R for the 'iris' data set.
+# This iteration is only to get the model up and running, so there is no feature engineering or parameter tuning.
 
 # LOAD LIBRARIES ----------------------------------------------------------
 # This section loads relevant libraries for this script.
@@ -14,29 +14,29 @@ train = data.table(read_csv('train.csv'))
 test = data.table(read_csv('test.csv'))
 
 # CREATE MODEL ------------------------------------------------------------
-# This section creates a linear regression model.
+# This section creates a KNN regression model.
 
   # Set seed for reproducibility.
   set.seed(555)
 
-  # Create linear regression model and include 5 fold cross validation.
-  linear_reg = train(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width, 
-                     train, 
-                     method = 'lm', 
-                     trControl = trainControl(method = 'cv', 
-                                              number = 5))
+  # Create KNN regression model and include 5 fold cross validation.
+  knn_reg = train(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width, 
+                  train, 
+                  method = 'knn', 
+                  trControl = trainControl(method = 'cv', 
+                                           number = 5))
   
   # View model summary.
-  summary(linear_reg)
+  knn_reg
   
   # View variable importance plot.
-  plot(varImp(linear_reg))
+  plot(varImp(knn_reg))
   
   # Generate training and test set predictions
-  train$linear_reg_pred = predict(linear_reg, 
-                                  train)
-  test$linear_reg_pred = predict(linear_reg, 
-                                 test)
+  train$knn_pred = predict(knn_reg, 
+                           train)
+  test$knn_pred = predict(knn_reg, 
+                          test)
 
 # EVALUATE MODEL ----------------------------------------------------------
 # This section evaluates the model by computing training, cross validation, and test set root mean square error (RMSE).
