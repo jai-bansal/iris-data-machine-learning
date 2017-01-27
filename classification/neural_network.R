@@ -7,6 +7,7 @@ library(nnet)
 library(e1071)
 
 # Import data.
+# The data files are located in the 'R' branch file, NOT the 'classification' or 'regression' folders.
 train = data.table(read.csv('train.csv',
                             header = T))
 test = data.table(read.csv('test.csv', 
