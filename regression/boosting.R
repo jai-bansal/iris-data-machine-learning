@@ -5,7 +5,7 @@
 # This section loads relevant libraries for this script.
 library(readr)
 library(data.table)
-library(gbm)
+library(caret)
 
 # IMPORT DATA -------------------------------------------------------------
 # This section imports data.
@@ -18,35 +18,36 @@ test = data.table(read_csv('test.csv'))
 
   # Set seed for reproducibility.
   set.seed(555)
-
-  # Create KNN regression model with 5 clusters and include 5 fold cross validation.
-  boosting_reg = gbm(formula = Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width, 
-                     
-                     data = train)
   
+  # Create boosting regression model and include 5 fold cross validation.
+  boosting_reg = train(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width, 
+                       train, 
+                       method = 'gbm', 
+                       trControl = trainControl(method = 'cv', 
+                                                number = 5))
+
   # View model summary.
-  knn_reg
+  boosting_reg
   
   # View variable importance plot.
-  plot(varImp(knn_reg))
+  plot(varImp(boosting_reg))
   
   # Generate training and test set predictions
-  train_scale$knn_pred = predict(knn_reg, 
-                                 train_scale)
-  test_scale$knn_pred = predict(knn_reg, 
-                                test_scale)
+  train$boost_pred = predict(boosting_reg, 
+                             train)
+  test$boost_pred = predict(boosting_reg, 
+                            test)
 
 # EVALUATE MODEL ----------------------------------------------------------
 # This section evaluates the model by computing training, cross validation, and test set root mean square error (RMSE).
 # Note that I do not include degrees of freedom in the training and test set calculations below.
 # I'm not sure how 'caret' computes RMSE in the cross validation calculation.
-# I'm also not sure cross validation is a great idea for KNN due to sample size concerns.
-  
+
   # Compute training set RMSE
-  sqrt(sum((train_scale$Sepal.Length - train_scale$knn_pred) ^ 2) / nrow(train_scale))
+  sqrt(sum((train$Sepal.Length - train$boost_pred) ^ 2) / nrow(train))
   
   # Compute cross validation set RMSE.
-  mean(knn_reg$resample$RMSE)
+  mean(boosting_reg$resample$RMSE)
   
   # Compute test set RMSE.
-  sqrt(sum((test_scale$Sepal.Length - test_scale$knn_pred) ^ 2) / nrow(test_scale))
+  sqrt(sum((test$Sepal.Length - test$boost_pred) ^ 2) / nrow(test))
