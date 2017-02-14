@@ -21,7 +21,7 @@ adaboost = AdaBoostClassifier(DecisionTreeClassifier(max_depth = 5),
 
 # Fit classifier on training data.
 adaboost.fit(train[['Sepal.Length', 'Sepal.Width', 'Petal.Length', 'Petal.Width']],
-       train['Species'])
+             train['Species'])
 
 # Generate predictions for training and test data.
 train['pred'] = adaboost.predict(train[['Sepal.Length', 'Sepal.Width', 'Petal.Length', 'Petal.Width']])
