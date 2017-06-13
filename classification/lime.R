@@ -8,7 +8,6 @@
 # This section loads libraries.
 library(readr)
 library(data.table)
-library(dplyr)
 library(caret)
 library(lime)
 

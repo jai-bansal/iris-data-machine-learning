@@ -2,15 +2,16 @@
 # This iteration is only to get the model up and running, so there is no feature engineering and parameter tuning.
 
 # Load packages.
+library(readr)
 library(data.table)
 library(kknn)
 
-# Import data.
+# IMPORT DATA --------------------------------------------------------------
+# This section imports data.
 # The data files are located in the 'R' branch file, NOT the 'classification' or 'regression' folders.
-train = data.table(read.csv('train.csv',
-                            header = T))
-test = data.table(read.csv('test.csv', 
-                           header = T))
+# The commands below assume the working directory is set to the 'classification' folder.
+train = data.table(read_csv('../train.csv'))
+test = data.table(read_csv('../test.csv'))
 
 #####
 # SCALE FEATURES.

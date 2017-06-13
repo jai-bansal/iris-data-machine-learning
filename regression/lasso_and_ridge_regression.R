@@ -14,7 +14,6 @@ library(glmnet)
 train = data.table(read_csv('train.csv'))
 test = data.table(read_csv('test.csv'))
 
-
 # CREATE LASSO REGRESSION MODEL ------------------------------------------------------------
 # This section creates a LASSO regression model.
 

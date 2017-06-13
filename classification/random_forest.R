@@ -4,18 +4,18 @@
 
 # LOAD LIBRARIES ----------------------------------------------------------
 # This section loads relevant libraries.
+library(readr)
 library(data.table)
 library(randomForest)
 library(RRF)
 library(caret)
 
-# IMPORT DATA -------------------------------------------------------------
+# IMPORT DATA --------------------------------------------------------------
 # This section imports data.
 # The data files are located in the 'R' branch file, NOT the 'classification' or 'regression' folders.
-train = data.table(read.csv('train.csv',
-                            header = T))
-test = data.table(read.csv('test.csv', 
-                           header = T))
+# The commands below assume the working directory is set to the 'classification' folder.
+train = data.table(read_csv('../train.csv'))
+test = data.table(read_csv('../test.csv'))
 
 # 'randomForest' PACKAGE MODEL --------------------------------------------
 # This section implements a random forest model using the 'randomForest' package.

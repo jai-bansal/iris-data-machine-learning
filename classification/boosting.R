@@ -9,11 +9,12 @@ library(adabag)
 library(caret)
 library(xgboost)
 
-# IMPORT DATA -------------------------------------------------------------
+# IMPORT DATA --------------------------------------------------------------
 # This section imports data.
 # The data files are located in the 'R' branch file, NOT the 'classification' or 'regression' folders.
-train = data.table(read_csv('train.csv'))
-test = data.table(read_csv('test.csv'))
+# The commands below assume the working directory is set to the 'classification' folder.
+train = data.table(read_csv('../train.csv'))
+test = data.table(read_csv('../test.csv'))
 
 # CLEAN AND PROCESS DATA --------------------------------------------------
 # This section prepares the data for modeling.
