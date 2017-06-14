@@ -11,16 +11,13 @@ from sklearn.linear_model import LassoCV, Lasso, RidgeCV, Ridge
 from sklearn.model_selection import cross_val_score
 from sklearn.metrics import mean_squared_error
 
-#############
+##############
 # IMPORT DATA
 #############
 # This section imports data.
 # The data files are located in the 'Python' branch file, NOT the 'classification' or 'regression' folders.
-
-# Set working directory (this obviously only works on my personal machine).
-os.chdir('D:\\Users\JBansal\Documents\GitHub\iris-data-machine-learning')
-
-# Import data.
+# The commands below assume the working directory is set to the 'classification' folder.
+os.chdir('..')
 train = pd.read_csv('train.csv')
 test = pd.read_csv('test.csv')
 

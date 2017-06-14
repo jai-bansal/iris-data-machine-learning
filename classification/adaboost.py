@@ -2,12 +2,16 @@
 # This iteration is only to get the model up and running, so there is no feature engineering and parameter tuning.
 
 # Import modules.
+import os
 import pandas as pd
 from sklearn import cross_validation
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.tree import DecisionTreeClassifier
 
 # Import data.
+# The data files are located in the 'Python' branch file, NOT the 'classification' or 'regression' folders.
+# The commands below assume the working directory is set to the 'classification' folder.
+os.chdir('..')
 train = pd.read_csv('train.csv')
 test = pd.read_csv('test.csv')
 
