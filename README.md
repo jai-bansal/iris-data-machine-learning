@@ -1,27 +1,11 @@
-#### Synopsis:
-This project creates various supervised learning scripts in R and Python using iris data.
+#### Summary:
+This project creates various classification and regression supervised learning scripts in R and Python using 'iris' data.
 The R and Python scripts are contained in the R and Python branches, respectively.
-These scripts are written to get the simplest possible version of the models up and running as quickly as possible, so there is no feature engineering and parameter tuning.
-The small iris dataset (150 rows total) is also chosen for ease of use.
+The classification and regression scripts are contained in the 'classification' and 'regression' folders within each branch, respectively.
+These scripts are written to get the simplest possible version of the models up and running as quickly as possible, so there is no / minimal feature engineering or parameter tuning.
+The small 'iris' dataset is also chosen for ease of use.
 
-Below are the models contained in each branch. I've also included the library or modules used in parentheses.
-
-R:
-- Neural Network ('nnet' and 'e1071')
-- Random Forest ('randomForest', 'RRF', and 'caret' implementations)
-- Adaboost ('adabag')
-- Support Vector Machine ('e1071')
-- Logistic Regression ('nnet')
-- K Nearest Neighbor ('kknn')
-- Naive Bayes ('e1071')
-
-Python (all models use 'sklearn'):
-- Random Forest
-- Adaboost
-- Support Vector Machine
-- Logistic Regression
-- K Nearest Neighbor
-- Naive Bayes
+There is 1 script per model. The file names are pretty obvious so I won't list all of the models used. In the R branch, 'classification' folder, there is a script for LIME. LIME is not a supervised learning model but helps to explain predictions. You can read more about it here: https://homes.cs.washington.edu/~marcotcr/blog/lime/. I couldn't get LIME to work for Python.
 
 For each model, training set accuracy, accuracy derived from cross validation, and test set accuracy will be included.
 
