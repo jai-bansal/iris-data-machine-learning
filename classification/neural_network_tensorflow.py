@@ -1,6 +1,7 @@
 # This script creates and evaluates a neural network classification model in Python for the 'iris' data.
 # It uses the 'tensorflow' package.
-# This iteration gets the model working as quickly as possible; there is no feature engineering or parameter tuning.
+# This iteration gets the model working as quickly as possible; there is no
+# cross validation, feature engineering, or parameter tuning.
 
 ################
 # IMPORT MODULES
@@ -54,7 +55,7 @@ test_labels_one_hot = LabelBinarizer().fit_transform(test_labels_num)
 classes = 3
 
 # Specify number of hidden nodes.
-hidden = 8
+hidden = 1000
 
 # Set # of iterations to run.
 steps = 10
@@ -62,6 +63,9 @@ steps = 10
 # Set up graph.
 graph = tf.Graph()
 with graph.as_default():
+
+    # Set random seed.
+    tf.set_random_seed(20170907)
 
     # Input training and test data and labels.
     # I use constant data instead of placeholder data since the 'iris' data is really small.
@@ -99,11 +103,28 @@ with tf.Session(graph = graph) as session:
 
     # Initialize variables.
     session.run(tf.global_variables_initializer())
-
     
+    # Iterate.
+    for step in range(steps):
     
-   
+        # Run optimizer.
+        _, l, pred = session.run([optimizer, loss, train_pred])
     
+        # Print loss every step.
+        print('Step ', step, ' Loss: ', l)
+
+        # Print training set accuracy every step.
+        print('Step ', step, ' Training Set Accuracy: ',
+              tf.reduce_mean(tf.cast(tf.equal(tf.argmax(pred, 1),
+                                              tf.argmax(train_labels, 1)),
+                                     tf.float32)).eval())
+        print('')
+    
+    # Print test set accuracy.
+    print('Test Set Accuracy: ',
+          tf.reduce_mean(tf.cast(tf.equal(tf.argmax(test_pred, 1),
+                                          tf.argmax(test_labels, 1)),
+                                 tf.float32)).eval()) 
 
 
 
@@ -111,61 +132,4 @@ with tf.Session(graph = graph) as session:
 
 
 
-##  
-##  # Training computation.
-##  mb_1 = tf.matmul(train_data, w1) + b1
-##  r = tf.nn.relu(mb_1)
-##  mb_2 = tf.matmul(r, w2) + b2
-##  loss = tf.reduce_mean(
-##    tf.nn.softmax_cross_entropy_with_logits(labels = train_labels, 
-##                                            logits = mb_2))
-##  
-##  # Optimizer.
-##  optimizer = tf.train.GradientDescentOptimizer(0.5).minimize(loss)
-##  
-##  # Predictions for the training, validation, and test data.
-##  train_pred = tf.nn.softmax(mb_2)
-##  test_pred = tf.nn.softmax(tf.matmul(tf.nn.relu(tf.matmul(test_data, w1) + b1), w2) + b2)
-##
-##
-##
-### Set number of iteration steps.
-##num_steps = 3001
-##
-### Run it!
-##with tf.Session(graph=graph) as session:
-##  
-##  # Initialize variables.
-##  session.run(tf.global_variables_initializer())
-##    
-##  # Start iteration steps.  
-##  for step in range(num_steps):
-##    
-##    # Set random data set index to choose batch.
-##    offset = (step * batch_size) % (mnist.train.labels.shape[0] - batch_size)
-##    
-##    # Generate batch.
-##    batch_data = mnist.train.images[offset:(offset + batch_size), :]
-##    batch_labels = mnist.train.labels[offset:(offset + batch_size), :]
-##    
-##    # Run optimizer using 'feed_dict' to feed in 'batch_data' and 'batch_labels'.
-##    _, l, pred = session.run(
-##        [optimizer, loss, train_pred], 
-##        feed_dict = {train_data: batch_data, 
-##                 train_labels: batch_labels})
-##    
-##    # Print progress and loss.
-##    if (step % 500 == 0):
-##      print('Batch loss at step', step, ':', l)
-##
-##      print('Training Accuracy at step', 
-##            step, 
-##            ':', 
-##            tf.reduce_mean(tf.cast(tf.equal(tf.argmax(pred, 1), 
-##                                            tf.argmax(batch_labels, 1)), 
-##                                    tf.float32)).eval())
-##    
-##  print('Test Set Accuracy', 
-##  tf.reduce_mean(tf.cast(tf.equal(tf.argmax(test_pred, 1), 
-##                                   tf.argmax(mnist.test.labels, 1)), 
-##                                tf.float32)).eval())
+
