@@ -26,9 +26,21 @@ test = data.table(read_csv('test.csv'))
   test_data = as.matrix(select(test, 
                                -c(Species)))
   
-  # Get training and test labels.
-  train_labels = as.matrix(train$Species)
-  test_labels = as.matrix(test$Species)
+  # Get training and test labels as one-hot vectors.
+  
+    # Create dummy versions of labels.
+    train = cbind(train, 
+                  model.matrix(~ Species - 1, 
+                               data = train))
+    test = cbind(test, 
+                 model.matrix(~ Species - 1, 
+                              data = test))
+    
+    # Get one-hot matrix.
+    train_labels_one_hot = as.matrix(select(train, 
+                                            c(Speciessetosa, Speciesversicolor, Speciesvirginica)))
+    test_labels_one_hot = as.matrix(select(test, 
+                                           c(Speciessetosa, Speciesversicolor, Speciesvirginica)))
   
 # CREATE MODEL ------------------------------------------------------------
 # This section creates a neural network classification model using 'tensorflow'.
@@ -51,8 +63,8 @@ test = data.table(read_csv('test.csv'))
                            dtype = tf$float32)
   test_data = tf$constant(test_data, 
                           dtype = tf$float32)
-  train_labels = tf$constant(train_labels)
-  test_labels = tf$constant(test_labels)
+  train_labels = tf$constant(train_labels_one_hot)
+  test_labels = tf$constant(test_labels_one_hot)
   
   # Define 2 layers of weights and biases.
   w_1 = tf$Variable(tf$truncated_normal(shape(4, hidden)))
@@ -64,14 +76,32 @@ test = data.table(read_csv('test.csv'))
   mm_1 = tf$matmul(train_data, w_1) + b_1
   relu_1 = tf$nn$relu(mm_1)
   mm_2 = tf$matmul(relu_1, w_2) + b_2
+  
+  # Specify loss function.
+  loss = tf$reduce_mean(tf$nn$softmax_cross_entropy_with_logits(labels = train_labels,
+                                                                logits = mm_2))
+  
+  # Define optimizer.
+  optimizer = tf$train$GradientDescentOptimizer(0.5)$minimize(loss)
+  
+  # Generate predictions.
+  train_pred = tf$nn$softmax(mm_2)
+  test_pred = tf$nn$softmax(tf$matmul(tf$nn$relu(tf$matmul(test_data, w_1) + b_1), w_2) + b_2)
 
-
+  # Launch the graph and initialize the variables.
+  session = tf$Session()
+  session$run(tf$global_variables_initializer())
+  
+  # Iterate.
+  for (step in 1:steps)
+    
+  {
+    
+    # Run optimizer.
+    _, l, pred = session$run([optimizer, loss, train_pred])
+    
+  }
 
 
   
-  # Convert training and test set labels into one-hot vectors.
-  model.matrix(~ Species - 1, 
-               data = train)
-  
-  model.matrix(~ ZLSG3BW_TEXT - 1,
-                                   data = agg_store)
+
