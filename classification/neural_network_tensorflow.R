@@ -98,9 +98,27 @@ test = data.table(read_csv('test.csv'))
   {
     
     # Run optimizer.
-    _, l, pred = session$run([optimizer, loss, train_pred])
+    session$run(optimizer)
+    
+    # Print loss at every step.
+    print(paste0('Step ', step, ':'))
+    print(paste0('Loss: ', 
+                 round(session$run(loss), 2)))
+    
+    # Print training set accuracy at every step.
+    print(paste0('Training Set Accuracy: ', 
+                 round(session$run(tf$reduce_mean(tf$cast(tf$equal(tf$argmax(train_pred, 1L), 
+                                                                   tf$argmax(train_labels, 1L)), 
+                                                          dtype = tf$float32))), 2)))
+    print('')
     
   }
+  
+  # Print test set accuracy.
+  print(paste0('Test Set Accuracy: ', 
+                 round(session$run(tf$reduce_mean(tf$cast(tf$equal(tf$argmax(test_pred, 1L), 
+                                                                   tf$argmax(test_labels, 1L)), 
+                                                          dtype = tf$float32))), 2)))
 
 
   
