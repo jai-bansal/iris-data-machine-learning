@@ -3,6 +3,9 @@
 # This iteration gets the model working as quickly as possible; there is no
 # cross validation, feature engineering, or parameter tuning.
 
+# There are some regularization (L2 and dropout) options shown as well as learning rate decay.
+# These are indicated at appropriate points in the script.
+
 ################
 # IMPORT MODULES
 ################
@@ -87,12 +90,36 @@ with graph.as_default():
     relu_1 = tf.nn.relu(mm_1)
     mm_2 = tf.matmul(relu_1, w_2) + b_2
 
+    # Specify 'mm_2' step with dropout.
+    #mm_2 = tf.matmul(tf.nn.dropout(relu_1,
+    #                               keep_prob = 0.95), w_2) + b_2
+
     # Specify loss function.
     loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels = train_labels,
                                                                   logits = mm_2))
 
+    # Specify loss function with L2 regularization.
+    # I apply L2 loss to 'w_2' only. I could've also applied it to the sum of 'w_1' and 'w_2'.
+    #loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels = train_labels,
+    #                                                              logits = mm_2)) + (0.001 * tf.nn.l2_loss(w_2))
+
     # Define optimizer.
-    optimizer = tf.train.GradientDescentOptimizer(0.5).minimize(loss)
+    #optimizer = tf.train.GradientDescentOptimizer(0.5).minimize(loss)
+
+    # Set up decaying learning rate.
+
+    # Create variable to count steps (since learning rate decays over time).
+    global_step = tf.Variable(0)
+
+    # Set up decaying learning rate.
+    learning_rate = tf.train.exponential_decay(0.5,
+                                               global_step,
+                                               decay_steps = 150,
+                                               decay_rate = 0.99)
+
+    # Set up optimizer with decaying learning rate.
+    optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss,
+                                                                          global_step = global_step)
 
     # Generate predictions.
     train_pred = tf.nn.softmax(mm_2)
