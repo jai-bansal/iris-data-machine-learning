@@ -104,22 +104,19 @@ with graph.as_default():
     #                                                              logits = mm_2)) + (0.001 * tf.nn.l2_loss(w_2))
 
     # Define optimizer.
-    #optimizer = tf.train.GradientDescentOptimizer(0.5).minimize(loss)
+    optimizer = tf.train.GradientDescentOptimizer(0.5).minimize(loss)
 
     # Set up decaying learning rate.
-
     # Create variable to count steps (since learning rate decays over time).
-    global_step = tf.Variable(0)
-
     # Set up decaying learning rate.
-    learning_rate = tf.train.exponential_decay(0.5,
-                                               global_step,
-                                               decay_steps = 150,
-                                               decay_rate = 0.99)
-
     # Set up optimizer with decaying learning rate.
-    optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss,
-                                                                          global_step = global_step)
+    #global_step = tf.Variable(0)
+    #learning_rate = tf.train.exponential_decay(0.5,
+    #                                           global_step,
+    #                                           decay_steps = 150,
+    #                                           decay_rate = 0.99)
+    #optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss,
+    #                                                                      global_step = global_step)
 
     # Generate predictions.
     train_pred = tf.nn.softmax(mm_2)
