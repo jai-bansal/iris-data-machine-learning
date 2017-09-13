@@ -1,13 +1,13 @@
 #### Summary:
-This project creates various classification and regression supervised learning scripts in R and Python using 'iris' data.
-The R and Python scripts are contained in the R and Python branches, respectively.
-The classification and regression scripts are contained in the 'classification' and 'regression' folders within each branch, respectively.
-These scripts are written to get the simplest possible version of the models up and running as quickly as possible, so there is no / minimal feature engineering or parameter tuning.
+This repository contains classification and regression supervised learning scripts in R and Python using 'iris' data.
+R and Python scripts are in the R and Python branches, respectively.
+Classification and regression scripts are contained in the 'classification' and 'regression' folders in each branch, respectively.
+These scripts get the simplest possible version of models running as quickly as possible, so there is no / minimal feature engineering or parameter tuning.
 The small 'iris' dataset is also chosen for ease of use.
 
-There is 1 script per model. The file names are pretty obvious so I won't list all of the models used. In the R branch, 'classification' folder, there is a script for LIME. LIME is not a supervised learning model but helps to explain predictions. You can read more about it here: https://homes.cs.washington.edu/~marcotcr/blog/lime/. I couldn't get LIME to work for Python.
+Scripts are named in an obvious way. In the R branch, 'classification' folder, there is a script for LIME. LIME is not a supervised learning model but helps to explain predictions. You can read more about it here: https://homes.cs.washington.edu/~marcotcr/blog/lime/. I couldn't get LIME to work for Python.
 
-For each model, training set accuracy, accuracy derived from cross validation, and test set accuracy will be included.
+Where possible, training, cross validation, and test set accuracy are included.
 
 #### Motivation:
 I created this project to explore various supervised learning models in R and Python.
