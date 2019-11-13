@@ -30,6 +30,9 @@ test = read_csv('test.csv')
   m = h2o.randomForest(training_frame = h2o_train, x = x, y = y, ntrees = 100, max_depth = 10)     # Random forest
   m = h2o.gbm(x = x, y = y, training_frame = h2o_train, ntrees = 100, max_depth = 5)
   
+  # Model performance
+  h2o.performance(m)
+  
   # Grid search
   
     grid_search = h2o.grid(algorithm = "randomForest", x = x, y = y, training_frame = h2o_train, 
